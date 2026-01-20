@@ -19,7 +19,7 @@ if (isset($_SESSION['user'])) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/styleIndex.css">
+    <link rel="stylesheet" href="assets/index-style.css">
 </head>
 <body>
 
@@ -120,7 +120,7 @@ if (isset($_SESSION['user'])) {
             <div class="big-cta">
                 <h2>Sekolah Yang Lebih Baik<br>Dimulai Dari Kamu</h2>
                 <p>Jangan biarkan fasilitas rusak mengganggu proses belajar. Laporkan sekarang untuk kenyamanan bersama.</p>
-                <a href="login.php" class="btn-white">Buat Laporan Sekarang</a>
+                <a href="register.php" class="btn-white">Buat Laporan Sekarang</a>
             </div>
         </div>
     </section>
