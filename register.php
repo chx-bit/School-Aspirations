@@ -1,7 +1,8 @@
 <?php
-require 'helpers/engine.php';
-require 'helpers/functions.php';
-
+session_start();
+require_once 'helpers/engine.php';
+require_once 'helpers/functions.php';
+isLogIn();
 $log = "";
 $success = false;
 
@@ -78,17 +79,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <form method="POST">
       <div class="form-group">
         <label>Nomor Induk Siswa (NIS)</label>
-        <input type="number" name="nis-input" class="input-box" placeholder="Contoh: 102030" required>
+        <input type="number" name="nis-input" class="input-box" placeholder="Contoh: 102030" maxlength="10"  required>
       </div>
 
       <div class="form-group">
         <label>Nama Lengkap</label>
-        <input type="text" name="nama-input" class="input-box" placeholder="Nama Lengkap Sesuai Absen" required>
+        <input type="text" name="nama-input" class="input-box" placeholder="Nama Lengkap Sesuai Absen" maxlength="255" required>
       </div>
 
       <div class="form-group">
         <label>Kelas</label>
-        <input type="text" name="kelas-input" class="input-box" placeholder="Contoh: XII RPL 1" required>
+        <input type="text" name="kelas-input" class="input-box" placeholder="Contoh: XII RPL 1" maxlength="50"  required>
       </div>
 
       <button type="submit" class="btn-submit">Daftar Sekarang</button>

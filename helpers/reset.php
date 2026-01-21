@@ -1,5 +1,5 @@
 <?php
-require 'engine.php';
+require_once 'engine.php';
 
 $username = 'admin1'; 
 $password_baru = '123';

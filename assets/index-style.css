@@ -18,7 +18,6 @@
   box-sizing: border-box;
   outline: none;
   scroll-behavior: smooth;
-  overflow-x: hidden;
 }
 
 body {
@@ -127,7 +126,6 @@ p.subtitle {
   font-weight: 600;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
-  overflow: hidden;
 }
 
 .btn-primary {

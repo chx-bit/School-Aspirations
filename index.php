@@ -1,14 +1,7 @@
 <?php
 session_start();
-
-if (isset($_SESSION['user'])) {
-    if ($_SESSION['role'] === 'admin') {
-        header('Location: admin/dashboard.php');
-    } else {
-        header('Location: siswa/dashboard.php');
-    }
-    exit;
-}
+require_once 'helpers/functions.php';
+isLogIn();
 ?>
 <!DOCTYPE html>
 <html lang="id">

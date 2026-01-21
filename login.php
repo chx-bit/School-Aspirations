@@ -1,59 +1,59 @@
 <?php
 session_start();
-require 'helpers/engine.php';
-require 'helpers/functions.php';
+require_once 'helpers/engine.php';
+require_once 'helpers/functions.php';
 
-$log = "";
+isLogIn();
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+$log = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $user_input = $_POST['user-input'];
   $pass_input = $_POST['pass-input'];
+  $name_input = strtolower($_POST['name-input']);
 
-  purify($user_input, $pass_input);
+  purify($user_input, $pass_input, $name_input);
 
-  if (!filled($user_input, $pass_input)) {
-    $log = "Mohon lengkapi Username/NIS dan Password/Nama.";
-  } else {
-    try {
-      $sql_admin = "SELECT * FROM Admin WHERE Username = :user";
-      $stmt = $pdo->prepare($sql_admin);
+  $isAdmin = !is_numeric($user_input);
+
+  if ($isAdmin) {
+    if (!filled($user_input, $pass_input)) {
+      $log = 'Username dan Password wajib diisi.';
+    } else {
+      $stmt = $pdo->prepare(
+        'SELECT * FROM Admin WHERE Username = :user'
+      );
       $stmt->execute([':user' => $user_input]);
-      $admin = $stmt->fetch(PDO::FETCH_ASSOC);
+      $admin = $stmt->fetch();
 
       if ($admin && password_verify($pass_input, $admin['password'])) {
-        $_SESSION['user'] = $admin;
-        $_SESSION['role'] = 'admin';
-        
-        header('Location: admin/dashboard.php');
-        exit();
-      } elseif (is_numeric($user_input)) {
-        
-        $pass_input = strtolower($pass_input);
-
-        $sql_siswa = "SELECT * FROM Siswa WHERE nis = :nis AND nama_lengkap = :nama";
-        $stmt_siswa = $pdo->prepare($sql_siswa);
-        $stmt_siswa->execute([
-            ':nis'  => $user_input,
-            ':nama' => $pass_input
-        ]);
-        $siswa = $stmt_siswa->fetch(PDO::FETCH_ASSOC);
-
-        if ($siswa) {
-          $_SESSION['user'] = $siswa;
-          $_SESSION['role'] = 'siswa';
-          $_SESSION['nis']  = $siswa['nis']; 
-          
-          header('Location: siswa/dashboard.php');
-          exit();
-        } else {
-          $log = "Login Gagal. Pastikan NIS dan Nama Lengkap sesuai.";
-        }
-      } else {
-        $log = "Akun tidak ditemukan atau Password salah.";
+        adminSession('admin', $admin['Username']);
+        redirectTo('admin/dashboard.php');
+        exit;
       }
 
-    } catch (PDOException $e) {
-      $log = "Terjadi kesalahan sistem.";
+      $log = 'Akun tidak ditemukan atau Password salah.';
+    }
+  } else {
+    if (!filled($user_input, $name_input)) {
+      $log = 'NIS dan Nama Lengkap wajib diisi.';
+    } else {
+      $stmt = $pdo->prepare(
+        'SELECT * FROM Siswa WHERE nis = :nis AND nama_lengkap = :nama'
+      );
+      $stmt->execute([
+        ':nis'  => $user_input,
+        ':nama' => $name_input
+      ]);
+      $siswa = $stmt->fetch();
+
+      if ($siswa) {
+        siswaSession('siswa', $name_input, $siswa['nis']);
+        redirectTo('siswa/dashboard.php');
+        exit;
+      }
+
+      $log = 'Login Gagal. NIS atau Nama salah.';
     }
   }
 }
@@ -64,20 +64,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Masuk | Aspirasi Sekolah</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
   <link rel="stylesheet" href="assets/login-register-style.css">
 </head>
 <body>
-
   <div class="glow-bg"></div>
-
   <div class="auth-container">
     <div class="auth-header">
       <h2>Selamat Datang</h2>
       <p>Masuk untuk mulai melapor atau mengelola aspirasi.</p>
     </div>
 
-    <?php if ($log !== ""): ?>
+    <?php if ($log !== ''): ?>
       <div class="alert">
         <span><?= $log; ?></span>
       </div>
@@ -86,23 +87,46 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <form method="POST">
       <div class="form-group">
         <label>Username / Nomor Induk Siswa</label>
-        <input type="text" name="user-input" class="input-box" placeholder="Masukkan Username atau NIS" required>
+        <input
+          type="text"
+          name="user-input"
+          class="input-box"
+          placeholder="Masukkan Username atau NIS"
+          required
+        >
       </div>
 
       <div class="form-group">
-        <label>Password / Nama Lengkap Siswa</label>
-        <input type="password" name="pass-input" class="input-box" placeholder="Kata Sandi atau Nama Lengkap Siswa" required>
+        <label>Nama Lengkap Khusus Siswa</label>
+        <input
+          type="text"
+          name="name-input"
+          class="input-box"
+          placeholder="Nama Lengkap Siswa"
+          required
+        >
+      </div>
+
+      <div class="form-group">
+        <label>Kata Sandi Khusus Admin</label>
+        <input
+          type="password"
+          name="pass-input"
+          class="input-box"
+          placeholder="Kata Sandi"
+          required
+        >
       </div>
 
       <button type="submit" class="btn-submit">Masuk Akun</button>
     </form>
 
     <div class="auth-footer">
-      Belum punya akun siswa? <a href="register.php">Daftar disini</a>
+      Belum punya akun siswa?
+      <a href="register.php">Daftar disini</a>
       <br>
       <a href="index.php" class="back-link">← Kembali ke Beranda</a>
     </div>
   </div>
-
 </body>
 </html>
