@@ -199,8 +199,8 @@ flowchart TD
 
 ## 👤 Author
 
-- chxbit
-```md
+- chx-bit
+
 ## 👥 Contributors
 - @Lightning-88
 - @Dhevanda04
