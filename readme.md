@@ -201,7 +201,6 @@ flowchart TD
 
 - chxbit
 
-## Support By
-
-- lightning88
-- Dhevanda04
+## 👥 Contributors
+- @Lightning-88
+- @Dhevanda04
