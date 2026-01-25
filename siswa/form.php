@@ -31,7 +31,8 @@ if(isset($_POST['btn'])){
   if(clean($opsi,$loc,$ket)){
     try{
       $query = "INSERT INTO Input_Aspirasi (nis, id_kategori, lokasi, ket) VALUES (?, ?, ?, ?)";
-      $stmt = run($query,$_SESSION['nis'],$opsi,$loc,$ket);
+      run($query,$_SESSION['nis'],$opsi,$loc,$ket);
+      run("INSERT INTO Aspirasi (id_pelaporan, status, feedback, id_kategori) VALUES (LAST_INSERT_ID(), 'Menunggu', '-', ?)", $opsi);
     } catch (Exception $e) {
       $log = 'Gagal: ' . $e->getMessage(); 
     }
