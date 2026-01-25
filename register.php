@@ -1,8 +1,7 @@
 <?php
-session_start();
-require_once 'helpers/engine.php';
-require_once 'helpers/functions.php';
-isLogIn();
+require_once __DIR__ . '/helpers/engine.php';
+require_once __DIR__ . '/helpers/functions.php';
+allowUsers();
 $log = "";
 $success = false;
 
@@ -15,31 +14,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $nama = strtolower($_POST['nama-input']);
   $kelas = strtoupper($_POST['kelas-input']);
 
-  purify($nis, $nama, $kelas);
+  clean($nis, $nama, $kelas);
 
   if (!filled($nis, $nama, $kelas)) {
     $log = 'Mohon lengkapi semua data (NIS, Nama, Kelas)';
   } else {
     try {
-      $sql = "INSERT INTO Siswa (nis, nama_lengkap, kelas) VALUES (:nis, :nama, :kelas)";
-      $stmt = $pdo->prepare($sql);
-      $stmt->execute([
-        ':nis'   => $nis,
-        ':nama'  => $nama,
-        ':kelas' => $kelas
-      ]);
-      
-      header('Location: register.php?status=success');
-      exit();
+    run('INSERT INTO Siswa (nis, nama_lengkap, kelas) VALUES (?,?,?)',$nis, $nama, $kelas);
+    redirectTo('register.php?status=success');
     } catch (PDOException $e) {
-      if ($e->getCode() == 23000) {
-        $log = "NIS tersebut sudah terdaftar";
-      } else {
-        $log = "Terjadi kesalahan sistem";
-      }
+    $log = "Gagal menyimpan data. NIS mungkin sudah terdaftar.";
     }
-  }
+  } 
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -79,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <form method="POST">
       <div class="form-group">
         <label>Nomor Induk Siswa (NIS)</label>
-        <input type="number" name="nis-input" class="input-box" placeholder="Contoh: 102030" maxlength="10"  required>
+        <input type="text" inputmode="numeric" name="nis-input" class="input-box" placeholder="Contoh: 102030" maxlength="10"  required>
       </div>
 
       <div class="form-group">

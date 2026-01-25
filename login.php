@@ -1,9 +1,7 @@
 <?php
-session_start();
-require_once 'helpers/engine.php';
-require_once 'helpers/functions.php';
-
-isLogIn();
+require_once __DIR__ . '/helpers/engine.php';
+require_once __DIR__ . '/helpers/functions.php';
+allowUsers();
 
 $log = '';
 
@@ -12,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $pass_input = $_POST['pass-input'];
   $name_input = strtolower($_POST['name-input']);
 
-  purify($user_input, $pass_input, $name_input);
+  clean($user_input, $pass_input, $name_input);
 
   $isAdmin = !is_numeric($user_input);
 
@@ -20,14 +18,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!filled($user_input, $pass_input)) {
       $log = 'Username dan Password wajib diisi.';
     } else {
-      $stmt = $pdo->prepare(
-        'SELECT * FROM Admin WHERE Username = :user'
-      );
-      $stmt->execute([':user' => $user_input]);
+      $stmt = run('SELECT * FROM Admin WHERE username = ?',$user_input);
       $admin = $stmt->fetch();
 
       if ($admin && password_verify($pass_input, $admin['password'])) {
-        adminSession('admin', $admin['Username']);
+        allowSession('admin',$admin);
         redirectTo('admin/dashboard.php');
         exit;
       }
@@ -38,21 +33,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!filled($user_input, $name_input)) {
       $log = 'NIS dan Nama Lengkap wajib diisi.';
     } else {
-      $stmt = $pdo->prepare(
-        'SELECT * FROM Siswa WHERE nis = :nis AND nama_lengkap = :nama'
-      );
-      $stmt->execute([
-        ':nis'  => $user_input,
-        ':nama' => $name_input
-      ]);
+      $stmt = run('SELECT * FROM Siswa WHERE nis = ? AND nama_lengkap = ?',$user_input,$name_input);
       $siswa = $stmt->fetch();
-
       if ($siswa) {
-        siswaSession('siswa', $name_input, $siswa['nis']);
+        allowSession('siswa',$siswa);
         redirectTo('siswa/dashboard.php');
         exit;
       }
-
       $log = 'Login Gagal. NIS atau Nama salah.';
     }
   }
@@ -103,7 +90,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           name="name-input"
           class="input-box"
           placeholder="Nama Lengkap Siswa"
-          required
         >
       </div>
 
@@ -114,7 +100,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           name="pass-input"
           class="input-box"
           placeholder="Kata Sandi"
-          required
         >
       </div>
 

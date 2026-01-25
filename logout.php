@@ -1,7 +1,6 @@
 <?php
-session_start();
-require_once 'helpers/engine.php';
+require_once __DIR__ . '/helpers/engine.php';
+require_once __DIR__ . '/helpers/functions.php';
 session_unset();
 session_destroy();
-header('Location: ' . BASE_URL . 'index.php'); 
-exit();
+redirectTo('index.php');

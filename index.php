@@ -1,7 +1,7 @@
 <?php
-session_start();
-require_once 'helpers/functions.php';
-isLogIn();
+require_once __DIR__ . '/helpers/engine.php';
+require_once __DIR__ . '/helpers/functions.php';
+allowUsers();
 ?>
 <!DOCTYPE html>
 <html lang="id">
