@@ -199,9 +199,9 @@ flowchart TD
 
 ## 👤 Author
 
-- chxbit
+- chx-bit
 
-## Support By
+## 👥 Contributors
+- [@Lightning-88](https://github.com/Lightning-88)
 
--lightning88
--Dhevanda04
+- [@Dhevanda04](https://github.com/Dhevanda04)
