@@ -51,18 +51,16 @@ CREATE TABLE Kategori (
 
 ```sql
 CREATE TABLE Input_Aspirasi (
-    Id_pelaporan INT(5) NOT NULL AUTO_INCREMENT,
+    id_pelaporan INT(5) NOT NULL AUTO_INCREMENT,
     nis INT(10) NOT NULL,
     id_kategori INT(5) NOT NULL,
     lokasi VARCHAR(50) NOT NULL,
     ket VARCHAR(50) NOT NULL,
-    feedback VARCHAR(30) NOT NULL,
-    PRIMARY KEY (Id_pelaporan),
-    CONSTRAINT fk_input_siswa
-        FOREIGN KEY (nis) REFERENCES Siswa(nis)
+    tanggal_lapor TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP(),
+    PRIMARY KEY (id_pelaporan),
+    FOREIGN KEY (nis) REFERENCES Siswa(nis) 
         ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_input_kategori
-        FOREIGN KEY (id_kategori) REFERENCES Kategori(Id_kategori)
+    FOREIGN KEY (id_kategori) REFERENCES Kategori(id_kategori) 
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 ```
@@ -72,12 +70,17 @@ CREATE TABLE Input_Aspirasi (
 ```sql
 CREATE TABLE Aspirasi (
     id_aspirasi INT(5) NOT NULL AUTO_INCREMENT,
+    id_pelaporan INT(5) NOT NULL,
+    username VARCHAR(50) DEFAULT NULL,
     status ENUM('Menunggu', 'Proses', 'Selesai') NOT NULL,
     id_kategori INT(5) NOT NULL,
-    feedback VARCHAR(30) NOT NULL,
+    feedback VARCHAR(30) DEFAULT NULL,
     PRIMARY KEY (id_aspirasi),
-    CONSTRAINT fk_aspirasi_kategori
-        FOREIGN KEY (id_kategori) REFERENCES Kategori(Id_kategori)
+    FOREIGN KEY (id_pelaporan) REFERENCES Input_Aspirasi(id_pelaporan) 
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (username) REFERENCES Admin(username) 
+        ON DELETE SET NULL ON UPDATE CASCADE,
+    FOREIGN KEY (id_kategori) REFERENCES Kategori(id_kategori) 
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 ```
@@ -89,40 +92,45 @@ CREATE TABLE Aspirasi (
 ```mermaid
 erDiagram
     Admin {
-        varchar Username PK
-        varchar password
+        varchar(50) username PK
+        varchar(255) password
     }
 
     Siswa {
-        int nis PK
-        varchar kelas
-        varchar nama_lengkap
+        int(10) nis PK
+        varchar(100) nama_lengkap
+        varchar(10) kelas
     }
 
     Kategori {
-        int Id_kategori PK
-        varchar ket_kategori
+        int(5) id_kategori PK
+        varchar(30) ket_kategori
     }
 
     Input_Aspirasi {
-        int Id_pelaporan PK
-        int nis FK
-        int id_kategori FK
-        varchar lokasi
-        varchar ket
-        varchar feedback
+        int(5) id_pelaporan PK
+        int(10) nis FK
+        int(5) id_kategori FK
+        varchar(50) lokasi
+        varchar(50) ket
+        timestamp tanggal_lapor
     }
 
     Aspirasi {
-        int id_aspirasi PK
+        int(5) id_aspirasi PK
+        int(5) id_pelaporan FK
+        varchar(50) username FK "Bisa Null"
         enum status
-        int id_kategori FK
-        varchar feedback
+        int(5) id_kategori FK
+        varchar(30) feedback "Bisa Null"
     }
 
     Siswa ||--o{ Input_Aspirasi : submits
     Kategori ||--o{ Input_Aspirasi : categorizes
     Kategori ||--o{ Aspirasi : categorizes
+    Input_Aspirasi ||--|| Aspirasi : has_status
+    Admin ||--o{ Aspirasi : processes
+
 ```
 
 ---
@@ -185,15 +193,20 @@ flowchart TD
 
 ---
 
-## 📝 Update Log
+## 📝 Update Log (v2.0)
 
-- Menambahkan kolom `nama_lengkap` **NOT NULL** pada tabel `Siswa`
-- Mengubah tipe data kolom `feedback` pada tabel `Input_Aspirasi` menjadi `VARCHAR(30)`
-- Mengubah tipe data kolom `feedback` pada tabel `Aspirasi` menjadi `VARCHAR(30)`
-- Menambahkan dokumentasi **Flowchart Admin**
-- Menambahkan dokumentasi **Flowchart Siswa**
-- Menambahkan **Diagram Database (ERD)** sesuai Document Version
-- Merapikan struktur README agar lebih konsisten dan profesional
+### **Perbaikan Logika Database & Alur Data**
+- **Sinkronisasi Otomatis:** Memperbarui logika pada `siswa/form.php`. Saat siswa mengirim aspirasi, sistem kini otomatis membuat *record* status awal ('Menunggu') di tabel `Aspirasi` menggunakan `LAST_INSERT_ID()`. Hal ini mencegah data tidak muncul di dashboard admin.
+- **Relasi Tabel:** Mengubah ketergantungan tabel `Aspirasi` agar terhubung langsung dengan `Input_Aspirasi` melalui `id_pelaporan`.
+
+### **Fitur Admin**
+- **Perbaikan Bug Edit:** Memperbaiki logika di `admin/edit.php` dimana proses update status dan feedback kini mengacu pada `id_pelaporan` yang valid, mengatasi masalah "Data Tidak Ditemukan" saat mencoba menindaklanjuti laporan.
+- **Dashboard Monitoring:** Mengoptimalkan query di `admin/dashboard.php` menggunakan `LEFT JOIN` yang lebih akurat untuk menampilkan status laporan dan feedback secara *real-time*.
+
+### **Penyempurnaan Kode**
+- Refactoring query SQL untuk efisiensi pengambilan data (`JOIN` table).
+- Penambahan validasi ID pada halaman edit admin untuk mencegah error akses langsung.
+
 
 ---
 
