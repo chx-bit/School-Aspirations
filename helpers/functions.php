@@ -15,9 +15,15 @@ function clean(&...$inputs) {
   }
   return true;
 }
+
 function redirectTo($target) {
-  return header('Location: ' . BASE_URL . $target);
+    $target = trim($target);
+    $target = trim($target, '/');
+
+    header('Location: ' . BASE_URL . $target);
+    exit;
 }
+
 function allowSession($role,$data){
   session_regenerate_id(true);
   $_SESSION = [];

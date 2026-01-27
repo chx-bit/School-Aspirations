@@ -24,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       if ($admin && password_verify($pass_input, $admin['password'])) {
         allowSession('admin',$admin);
         redirectTo('admin/dashboard.php');
-        exit;
       }
 
       $log = 'Akun tidak ditemukan atau Password salah.';
@@ -38,7 +37,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       if ($siswa) {
         allowSession('siswa',$siswa);
         redirectTo('siswa/dashboard.php');
-        exit;
       }
       $log = 'Login Gagal. NIS atau Nama salah.';
     }

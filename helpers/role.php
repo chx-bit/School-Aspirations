@@ -1,4 +1,4 @@
 <?php
 function checkRole($role){
-    $_SESSION['role'] !== $role && exit('y gaisok se');
+    $_SESSION['role'] !== $role && redirectTo('not-found.html');
 }

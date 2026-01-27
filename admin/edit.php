@@ -5,7 +5,7 @@ require_once __DIR__ . '/../helpers/auth.php';
 require_once __DIR__ . '/../helpers/role.php';
 
 checkRole('admin');
-
+$log = '';
 $id = $_GET['id_pelaporan'] ?? null;
 if (!$id) {
     redirectTo('admin/dashboard.php');
@@ -16,10 +16,17 @@ if (isset($_POST['update'])) {
     $status = $_POST['status'];
     $feedback = $_POST['feedback'];
 
-    run("UPDATE Aspirasi SET status = ?, feedback = ? WHERE id_pelaporan = ?", 
-        $status, $feedback, $id);
-    redirectTo('dashboard.php');
-    exit;
+    if (!filled($status, $feedback)) {
+        $log = 'isi en kabeh';
+    } else {
+        run(
+            "UPDATE Aspirasi SET status = ?, feedback = ? WHERE id_pelaporan = ?",
+            $status,
+            $feedback,
+            $id
+        );
+        redirectTo('admin/dashboard.php');
+    }
 }
 
 $sql = "SELECT i.id_pelaporan, i.ket, i.lokasi, s.nama_lengkap, k.ket_kategori, a.status, a.feedback 
@@ -32,14 +39,17 @@ $sql = "SELECT i.id_pelaporan, i.ket, i.lokasi, s.nama_lengkap, k.ket_kategori, 
 $data = run($sql, $id)->fetch();
 
 if (!$data) exit("Data tidak ditemukan");
+
 ?>
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Aspirasi</title>
 </head>
+
 <body>
     <h2>Tindak Lanjut Aspirasi</h2>
     <a href="dashboard.php">Kembali</a>
@@ -80,5 +90,7 @@ if (!$data) exit("Data tidak ditemukan");
         <br><br>
         <button type="submit" name="update">Simpan Perubahan</button>
     </form>
+    <?= $log ?>
 </body>
+
 </html>

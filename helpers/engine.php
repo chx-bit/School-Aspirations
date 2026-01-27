@@ -5,9 +5,13 @@ date_default_timezone_set('Asia/Jakarta');
 session_start();
 
 //BASE URL
-$serveo = 'https://aspirations.serveousercontent.com/';
-$local = 'http://0.0.0.0:8080/';
-define('BASE_URL', $local);
+$protocol = (!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] !== "off") ? "https://" : "http://";
+$host = $_SERVER["HTTP_HOST"];
+$path = str_replace(basename($_SERVER["SCRIPT_NAME"]), "", $_SERVER["SCRIPT_NAME"]);
+$project_name = explode("/", $path)[1];
+$base_url = $protocol . $host . "/" . $project_name;
+
+define("BASE_URL", $base_url);
 function dbConnect() {
   $host = '127.0.0.1';
   $user = 'root';

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>404 Not Found</title>
+    <style>
+        /* Reset dasar */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            text-align: center;
+            background: #fff;
+            padding: 50px 30px;
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            max-width: 500px;
+        }
+
+        h1 {
+            font-size: 100px;
+            color: #e74c3c;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 16px;
+            margin-bottom: 30px;
+            color: #555;
+        }
+
+        a {
+            display: inline-block;
+            text-decoration: none;
+            background: #3498db;
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        a:hover {
+            background: #2980b9;
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 70px; }
+            h2 { font-size: 24px; }
+            p { font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>404</h1>
+        <h2>Halaman Tidak Ditemukan</h2>
+        <p>Maaf, halaman yang kamu cari tidak tersedia atau mungkin telah dipindahkan.</p>
+        <a href="index.html">Kembali ke Beranda</a>
+    </div>
+</body>
+</html>
