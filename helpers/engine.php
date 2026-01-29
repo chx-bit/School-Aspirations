@@ -4,14 +4,18 @@ session_set_cookie_params(3600);
 date_default_timezone_set('Asia/Jakarta');
 session_start();
 
-//BASE URL
-$protocol = (!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] !== "off") ? "https://" : "http://";
-$host = $_SERVER["HTTP_HOST"];
-$path = str_replace(basename($_SERVER["SCRIPT_NAME"]), "", $_SERVER["SCRIPT_NAME"]);
-$project_name = explode("/", $path)[1];
-$base_url = $protocol . $host . "/" . $project_name;
+//BASE URL<?php<?php
+$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+    ? 'https'
+    : 'http';
 
-define("BASE_URL", $base_url);
+$host = $_SERVER['HTTP_HOST'];
+
+$scriptDir = dirname($_SERVER['SCRIPT_NAME']);
+$projectRoot = dirname($scriptDir);
+
+define('BASE_URL', rtrim($protocol . '://' . $host . $projectRoot, '/') . '/');
+
 function dbConnect() {
   $host = '127.0.0.1';
   $user = 'root';

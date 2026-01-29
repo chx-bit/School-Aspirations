@@ -114,6 +114,6 @@ LEFT JOIN Aspirasi a ON i.id_pelaporan = a.id_pelaporan WHERE s.nis = ? ;',$_SES
    onclick="return confirm('Apakah Anda yakin ingin keluar?')">
    Keluar
    </a>
-  <a href="<?= BASE_URL ?>siswa/form.php">FORM</a>
+  <a href="<?= BASE_URL ?>form.php">FORM</a>
 </body>
 </html>

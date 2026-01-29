@@ -47,10 +47,23 @@ if (!$data) exit("Data tidak ditemukan");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/admin.css">
     <title>Edit Aspirasi</title>
 </head>
 
 <body>
+    <nav>
+        <div class="nav-logo">
+            <i data-feather="airplay"></i>
+            Aspirasi Sekolah
+        </div>
+        <a
+            href="<?= BASE_URL ?>logout.php"
+            onclick="return confirm('Apakah Anda yakin ingin keluar?')">
+            Logout
+        </a>
+
+    </nav>
     <h2>Tindak Lanjut Aspirasi</h2>
     <a href="dashboard.php">Kembali</a>
     <hr>
