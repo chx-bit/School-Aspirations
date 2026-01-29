@@ -127,6 +127,7 @@ allowUsers();
         </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <!-- <script src="assets/js/feather.min.js"></script> -->
     <script>
         feather.replace();
     </script>

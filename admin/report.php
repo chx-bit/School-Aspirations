@@ -152,6 +152,7 @@ $output_data = run(
     <a href="dashboard.php" class="print-btn" style="margin-bottom:3rem;"><i data-feather="arrow-left"></i>Kembali</a>
 
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <!-- <script src="../assets/js/feather.min.js"></script> -->
     <script>
       feather.replace();
 
