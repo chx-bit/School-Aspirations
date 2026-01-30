@@ -1,61 +1,74 @@
-INSERT INTO Admin (Username, password) VALUES
-('admin1', '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm'),
-('admin2', '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm'),
-('admin3', '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm'),
-('admin4', '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm'),
-('admin5', '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm'),
-('admin6', '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm'),
-('admin7', '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm'),
-('admin8', '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm'),
-('admin9', '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm'),
-('admin10', '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm');
+SET FOREIGN_KEY_CHECKS = 0;
+
+TRUNCATE TABLE Aspirasi;
+TRUNCATE TABLE Input_Aspirasi;
+TRUNCATE TABLE Siswa;
+TRUNCATE TABLE Admin;
+TRUNCATE TABLE Kategori;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
 INSERT INTO Kategori (id_kategori, ket_kategori) VALUES
-(1, 'Fasilitas & Sarana'),
-(2, 'Kebersihan Lingkungan'),
-(3, 'Kurikulum & Pengajaran'),
-(4, 'Keamanan Sekolah'),
-(5, 'Kedisiplinan Siswa'),
-(6, 'Ekstrakurikuler'),
-(7, 'Kantin & Gizi'),
-(8, 'Administrasi & TU'),
-(9, 'Kesehatan & UKS'),
-(10, 'Teknologi & Lab Komputer');
+(1,'Fasilitas & Sarana'),
+(2,'Kebersihan Lingkungan'),
+(3,'Kurikulum & Pembelajaran'),
+(4,'Keamanan Sekolah'),
+(5,'Kedisiplinan Siswa'),
+(6,'Ekstrakurikuler'),
+(7,'Kantin & Konsumsi'),
+(8,'Layanan Administrasi'),
+(9,'Kesehatan & UKS'),
+(10,'Lainnya');
 
 INSERT INTO Siswa (nis, nama_lengkap, kelas) VALUES
-(1001, 'Aditya Pratama', 'XII RPL 1'),
-(1002, 'Budi Santoso', 'XI TKJ 2'),
-(1003, 'Citra Kirana', 'X DKV 1'),
-(1004, 'Dewi Lestari', 'XII RPL 2'),
-(1005, 'Eko Kurniawan', 'XI TSM 1'),
-(1006, 'Fajar Nugraha', 'X AKL 3'),
-(1007, 'Gita Gutawa', 'XII OTKP 1'),
-(1008, 'Hendra Setiawan', 'XI TKJ 1'),
-(1009, 'Indah Permata', 'X BDP 2'),
-(1010, 'Joko Anwar', 'XII MM 1');
+('2024000001','Ahmad Rizki','X RPL'),
+('2024000002','Budi Santoso','X TAV'),
+('2024000003','Citra Lestari','X TKR 1'),
+('2024000004','Dimas Pratama','XI RPL'),
+('2024000005','Eka Putri','XI TAV'),
+('2024000006','Fajar Nugroho','XI TKR 3'),
+('2024000007','Gina Maharani','XII RPL'),
+('2024000008','Hadi Saputra','XII TAV'),
+('2024000009','Indah Permata','XII TKR 2'),
+('2024000010','Joko Widodo','XII TKR 6');
 
-INSERT INTO Input_Aspirasi (id_pelaporan, nis, id_kategori, lokasi, ket, tanggal_lapor) VALUES
-(1, 1001, 1, 'Ruang Kelas XII RPL 1', 'AC mati total panas sekali', '2026-01-20 08:00:00'),
-(2, 1002, 2, 'Toilet Pria Lantai 2', 'Kran air patah dan air meluber', '2026-01-20 09:30:00'),
-(3, 1003, 7, 'Kantin Sehat', 'Harga gorengan naik tidak wajar', '2026-01-21 10:15:00'),
-(4, 1004, 10, 'Lab Komputer 3', 'Mouse banyak yang hilang', '2026-01-21 11:00:00'),
-(5, 1005, 4, 'Parkiran Motor Siswa', 'Helm sering tertukar posisinya', '2026-01-22 07:00:00'),
-(6, 1006, 6, 'Lapangan Basket', 'Ring basket miring bahaya', '2026-01-22 16:00:00'),
-(7, 1007, 3, 'Perpustakaan', 'Buku paket matematika kurang', '2026-01-23 09:00:00'),
-(8, 1008, 1, 'Masjid Sekolah', 'Karpet bau apek perlu dicuci', '2026-01-23 12:30:00'),
-(9, 1009, 9, 'Ruang UKS', 'Obat merah habis stok kosong', '2026-01-24 08:45:00'),
-(10, 1010, 5, 'Gerbang Depan', 'Siswa sering lompat pagar', '2026-01-24 14:00:00');
+INSERT INTO Admin (username, password) VALUES
+('admin01','$2a$12$79Y3l2x7mZIFsLgaUkQEUeukACOCNery7LfbGEdsZS4C2cStgGxoy'),
+('admin02','$2a$12$79Y3l2x7mZIFsLgaUkQEUeukACOCNery7LfbGEdsZS4C2cStgGxoy'),
+('admin03','$2a$12$79Y3l2x7mZIFsLgaUkQEUeukACOCNery7LfbGEdsZS4C2cStgGxoy'),
+('admin04','$2a$12$79Y3l2x7mZIFsLgaUkQEUeukACOCNery7LfbGEdsZS4C2cStgGxoy'),
+('admin05','$2a$12$79Y3l2x7mZIFsLgaUkQEUeukACOCNery7LfbGEdsZS4C2cStgGxoy'),
+('admin06','$2a$12$79Y3l2x7mZIFsLgaUkQEUeukACOCNery7LfbGEdsZS4C2cStgGxoy'),
+('admin07','$2a$12$79Y3l2x7mZIFsLgaUkQEUeukACOCNery7LfbGEdsZS4C2cStgGxoy'),
+('admin08','$2a$12$79Y3l2x7mZIFsLgaUkQEUeukACOCNery7LfbGEdsZS4C2cStgGxoy'),
+('admin09','$2a$12$79Y3l2x7mZIFsLgaUkQEUeukACOCNery7LfbGEdsZS4C2cStgGxoy'),
+('admin10','$2a$12$79Y3l2x7mZIFsLgaUkQEUeukACOCNery7LfbGEdsZS4C2cStgGxoy');
 
-INSERT INTO Aspirasi
-(id_aspirasi, id_pelaporan, id_kategori, status, feedback, Username)
-VALUES
-(1, 1, 1, 'Proses',   'Teknisi sudah dipanggil',            'admin1'),
-(2, 2, 2, 'Selesai',  'Kran sudah diganti baru',            'admin2'),
-(3, 3, 7, 'Menunggu', 'Akan didiskusikan dgn kantin',       'admin3'),
-(4, 4, 10,'Proses',   'Sedang pengadaan mouse baru',       'admin4'),
-(5, 5, 4, 'Selesai',  'CCTV parkiran ditambah',            'admin5'),
-(6, 6, 6, 'Menunggu', 'Menunggu dana BOS cair',            'admin6'),
-(7, 7, 3, 'Proses',   'Buku sedang dipesan',               'admin7'),
-(8, 8, 1, 'Selesai',  'Karpet sudah di laundry',           'admin8'),
-(9, 9, 9, 'Proses',   'Obat sudah dibeli PMR',             'admin9'),
-(10,10,5, 'Menunggu', 'Akan dirazia besok pagi',           'admin10');
+INSERT INTO Input_Aspirasi (nis, id_kategori, lokasi, ket) VALUES
+('2024000001',1,'KELAS','KURSI RUSAK'),
+('2024000002',2,'HALAMAN','SAMPAH BERSERAK'),
+('2024000003',3,'KELAS','MATERI KURANG JELAS'),
+('2024000004',4,'GERBANG','KEAMANAN KURANG'),
+('2024000005',5,'KELAS','TERLAMBAT MASUK'),
+('2024000006',6,'LAPANGAN','EKSKUL KURANG'),
+('2024000007',7,'KANTIN','MAKANAN MAHAL'),
+('2024000008',8,'TU','LAYANAN LAMBAT'),
+('2024000009',9,'UKS','OBAT KURANG'),
+('2024000010',10,'SEKOLAH','LAINNYA');
 
+INSERT INTO Aspirasi (id_pelaporan, username, status, id_kategori, feedback) VALUES
+(1,'admin01','Menunggu',1,'AKAN DICEK'),
+(2,'admin02','Proses',2,'SEDANG DIBERSIHKAN'),
+(3,'admin03','Menunggu',3,'AKAN DIEVALUASI'),
+(4,'admin04','Selesai',4,'SUDAH DITANGANI'),
+(5,'admin05','Proses',5,'DALAM PEMANTAUAN'),
+(6,'admin06','Menunggu',6,'AKAN DIBAHAS'),
+(7,'admin07','Selesai',7,'SUDAH DITINDAK'),
+(8,'admin08','Proses',8,'SEDANG DIPROSES'),
+(9,'admin09','Menunggu',9,'AKAN DILENGKAPI'),
+(10,'admin10','Selesai',10,'SELESAI');
+
+UPDATE Siswa
+SET nama_lengkap = LOWER(nama_lengkap);
+-- User 2024000010 Joko Widodo
+-- Admin admin01 admin

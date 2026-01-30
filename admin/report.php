@@ -3,8 +3,8 @@ require_once __DIR__ . '/../helpers/engine.php';
 require_once __DIR__ . '/../helpers/functions.php';
 require_once __DIR__ . '/../helpers/auth.php';
 require_once __DIR__ . '/../helpers/role.php';
-
 checkRole('admin');
+allowUsers();
 
 $output_data = run(
   'SELECT
@@ -28,7 +28,7 @@ $output_data = run(
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../assets/admin.css" />
+    <link rel="stylesheet" href="../assets/css/admin.css" />
     <title>print</title>
 
     <style>

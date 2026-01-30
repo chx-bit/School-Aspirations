@@ -3,8 +3,9 @@ require_once __DIR__ . '/../helpers/engine.php';
 require_once __DIR__ . '/../helpers/functions.php';
 require_once __DIR__ . '/../helpers/auth.php';
 require_once __DIR__ . '/../helpers/role.php';
-
 checkRole('admin');
+allowUsers();
+
 $log = '';
 $id = $_GET['id_pelaporan'] ?? null;
 if (!$id) {
@@ -47,7 +48,7 @@ if (!$data) exit("Data tidak ditemukan");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/admin.css">
+    <link rel="stylesheet" href="../assets/css/admin.css">
     <title>Edit Aspirasi</title>
 </head>
 
